@@ -36,7 +36,6 @@ const PostList = () => {
   useEffect(() => { 
     (async() => {
       setPosts(await getPosts({limit: 10}));
-      // setTarget(container.current.lastChild);
     })();
   }, []);
 
