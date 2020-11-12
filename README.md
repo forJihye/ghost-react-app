@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Ghost Contenxt API
+
+### Contenxt API
+
+[https://ghost.org/docs/api/v3/content/#authentication](https://ghost.org/docs/api/v3/content/#authentication)
+
+# IntersectionObserver Internet Explorer
+[IntersectionObserver polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill)
