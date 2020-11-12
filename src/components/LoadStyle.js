@@ -6,7 +6,7 @@ const shine = keyframes`
     background-position: right -40px top 0;
   }
 `
-const LoadingContainer = styled.div`
+const Container = styled.div`
   position: relative;
   &.loading::after {  
     content: "";
@@ -27,18 +27,15 @@ const LoadingContainer = styled.div`
 `;
 
 const loadingImage = (el) => {
-  el.parentNode.classList.add('loading');
   switch(el.tagName){
   case 'IMG': return new Promise(res => {
-    if(!el.complete){
-      el.onload = () => {
-        el.parentNode.classList.remove('loading');
-        res();
-      }
-    }else{
+    if(el.complete) return;
+    el.parentNode.classList.add('loading');
+    el.onload = () => {
       el.parentNode.classList.remove('loading');
+      res();
     }
-  }) 
+  });
   case 'VIDEO': console.log('video');
   }
 }; 
@@ -51,7 +48,7 @@ const LoadStyle = ({children}) => {
     })();
   }, []);
 
-  return <LoadingContainer> {children} </LoadingContainer>
+  return <Container> {children} </Container>
 }
 
 export default LoadStyle;

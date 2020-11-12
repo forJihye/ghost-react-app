@@ -75,5 +75,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 [https://ghost.org/docs/api/v3/content/#authentication](https://ghost.org/docs/api/v3/content/#authentication)
 
+
 # IntersectionObserver Internet Explorer
 [IntersectionObserver polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill)
+

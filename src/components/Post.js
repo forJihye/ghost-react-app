@@ -19,7 +19,7 @@ const StyledPost = styled.div`
 
 const Post = React.forwardRef(({post, i}, ref) => {
   const img = useRef(null);
-
+  //console.log(post)
   useEffect(() => {
     // const io = new IntersectionObserver((entries, observer) => {
     //   entries.forEach(entry => {
@@ -36,7 +36,8 @@ const Post = React.forwardRef(({post, i}, ref) => {
   return <StyledPost>
     <Link to={`/detail/${post.id}`}>
       <LoadStyle>
-        <img ref={img} src={`http://picsum.photos/350/350?${i}`} alt={post.title} />
+        <img ref={img} src={post.feature_image} alt={post.title} />
+        {/* <img ref={img} src={`http://picsum.photos/350/350?${i}`} alt={post.title} /> */}
       </LoadStyle>
       <h3 className="title">{post.title}</h3>
       <div className="tags">
