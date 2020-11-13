@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef } from 'react';
-import { getPosts, getPostsByPage } from '../api/ghost';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { getPostsByPage } from '../api/ghost';
 import styled from 'styled-components';
 import Post from './Post';
 import Pagination from './Pagination';
-import { useLocation, useParams } from 'react-router-dom';
 import useAsync from '../utils/useAsync';
 
 const GridContainer = styled.div`
@@ -17,12 +17,9 @@ const GridContainer = styled.div`
 
 const PostList = () => {
   const location = useLocation();
-  const container = useRef(null);
   const [pagination, setPagination] = useState([]);
   const [posts] = useAsync(async() => {
     const data = await getPostsByPage({limit: 5, page: location.search ? Number(location.search.split('=')[1]) : 1});
-    // const pagination = data.meta?.pagination;
-    // const total = Array.from({length: pagination.pages}, (v, i) => i+1);
     setPagination(data.meta?.pagination);
     return data;
   }, [location]);
@@ -44,8 +41,8 @@ const PostList = () => {
     });
   }
   
-  return <section>
-    <GridContainer ref={container}>
+  return <section style={{width: '1200px', margin: '0 auto'}}>
+    <GridContainer>
       {posts && posts.length > 0 ? posts.map((post, i) => <Post key={`post${i}`} post={post} i={i} />) : 'Loading...'}
     </GridContainer> 
     {posts && <Pagination pages={pagination.pages} prev={pagination.prev} next={pagination.next} />}
@@ -53,3 +50,4 @@ const PostList = () => {
 }
 
 export default PostList;
+
