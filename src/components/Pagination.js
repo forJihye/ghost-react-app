@@ -28,8 +28,11 @@ const StyledPagination = styled.div`
 `;
 
 const Pagination = ({pages, prev, next}) => {
+  const pagesList = Array.from({length: pages}, (v, i) => i+1);
   return <StyledPagination>
-    {pages.map((page, i) => <Link key={`page${i}`} to={`/?page=${page}`}>{page}</Link>)}
+    {prev && <Link to={`/?page=${prev}`}>prev</Link>}
+    {pagesList.map((page, i) => <Link key={`page${i}`} to={`/?page=${page}`}>{page}</Link>)}
+    {next && <Link to={`/?page=${next}`}>next</Link>}
   </StyledPagination>
 }
 

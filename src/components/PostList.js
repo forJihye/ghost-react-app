@@ -18,12 +18,12 @@ const GridContainer = styled.div`
 const PostList = () => {
   const location = useLocation();
   const container = useRef(null);
-  const [pages, setPages] = useState([]);
+  const [pagination, setPagination] = useState([]);
   const [posts] = useAsync(async() => {
     const data = await getPostsByPage({limit: 5, page: location.search ? Number(location.search.split('=')[1]) : 1});
-    const pagination = data.meta?.pagination;
-    const total = Array.from({length: pagination.pages}, (v, i) => i+1);
-    setPages(total);
+    // const pagination = data.meta?.pagination;
+    // const total = Array.from({length: pagination.pages}, (v, i) => i+1);
+    setPagination(data.meta?.pagination);
     return data;
   }, [location]);
   
@@ -48,7 +48,7 @@ const PostList = () => {
     <GridContainer ref={container}>
       {posts && posts.length > 0 ? posts.map((post, i) => <Post key={`post${i}`} post={post} i={i} />) : 'Loading...'}
     </GridContainer> 
-    {posts && <Pagination pages={pages} />}
+    {posts && <Pagination pages={pagination.pages} prev={pagination.prev} next={pagination.next} />}
   </section>
 }
 
