@@ -9,4 +9,5 @@ const api = new GhostContentAPI({
 export const getAllPosts = async() => await api.posts.browse({limit: 'all'});
 export const getPosts = async({limit}) => await api.posts.browse({limit, include: 'tags'}).catch(err => console.error(err));
 export const getPost = async(id) => await api.posts.read({id});
-export const getPostsByPage = async({limit, page}) => await api.posts.browse({limit: 'all'});
+export const getPostsByPage = async({limit, page}) => await api.posts.browse({limit, page, include: 'tags'});
+

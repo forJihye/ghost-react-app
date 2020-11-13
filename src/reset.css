@@ -110,3 +110,11 @@ img {
   height: auto;
   vertical-align: top;
 }
+button {
+  display: inline-block;
+  outline: none;
+  border: none;
+  background: none;
+  padding: 0;
+  vertical-align: middle;
+}

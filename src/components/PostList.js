@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
-import { getPosts } from '../api/ghost';
+import { getPosts, getPostsByPage } from '../api/ghost';
 import styled from 'styled-components';
 import Post from './Post';
-import { sleep } from '../utils';
+import Pagination from './Pagination';
+import { useLocation, useParams } from 'react-router-dom';
+import useAsync from '../utils/useAsync';
 
 const GridContainer = styled.div`
   position: relative;
@@ -12,33 +14,23 @@ const GridContainer = styled.div`
   grid-auto-flow: dense;
   grid-gap: 20px;
 `;
-const LoadingContainer = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  color: #fff;
-  z-index: 5;
-`;
 
 const PostList = () => {
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  
+  const location = useLocation();
   const container = useRef(null);
-
-  useEffect(() => { 
-    (async() => {
-      setPosts(await getPosts({limit: 10}));
-    })();
+  const [pages, setPages] = useState([]);
+  const [posts] = useAsync(async() => {
+    const data = await getPostsByPage({limit: 5, page: location.search ? Number(location.search.split('=')[1]) : 1});
+    const pagination = data.meta?.pagination;
+    const total = Array.from({length: pagination.pages}, (v, i) => i+1);
+    setPages(total);
+    return data;
+  }, [location]);
+  
+  useEffect(() => {
+    const io = new IntersectionObserver(onIntersection, {threshold: 1.0});
   }, []);
-
+  
   const onIntersection = (entries, observer) => {
     entries.forEach(async(entry) => {
       if(entry.isIntersecting){
@@ -51,16 +43,12 @@ const PostList = () => {
       }
     });
   }
-
-  useEffect(() => {
-    const io = new IntersectionObserver(onIntersection, {threshold: 1.0});
-  }, []);
   
   return <section>
     <GridContainer ref={container}>
-      {posts.length > 0 ? posts.map((post, i) => <Post key={`post${i}`} post={post} i={i} />) : 'Loading...'}
-      {isLoading && <LoadingContainer>Loading...</LoadingContainer>}
-    </GridContainer>
+      {posts && posts.length > 0 ? posts.map((post, i) => <Post key={`post${i}`} post={post} i={i} />) : 'Loading...'}
+    </GridContainer> 
+    {posts && <Pagination pages={pages} />}
   </section>
 }
 
