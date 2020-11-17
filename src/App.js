@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PostList from './components/PostList';
+import List from './components/List';
 import styled from 'styled-components';
-import PostDetail from './components/PostDetail';
+import Detail from './components/Detail';
+import Blog from './components/Blog';
 
 const Main = styled.main`
   padding: 20px;
@@ -10,8 +11,9 @@ const Main = styled.main`
 function App() {
   return <Router>
     <Switch>
-      <Route exact path='/' component={PostList} />
-      <Route path={'/detail/:id'} component={PostDetail} />
+      <Route exact path='/' component={List} />
+      <Route path={'/detail/:id'} component={Detail} />
+      <Route path='/blog' component={Blog} />
     </Switch>
   </Router>
 }

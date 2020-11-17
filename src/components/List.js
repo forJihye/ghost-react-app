@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getPostsByPage } from '../api/ghost';
 import styled from 'styled-components';
-import Post from './Post';
+import Item from './Item';
 import Pagination from './Pagination';
 import useAsync from '../utils/useAsync';
 
@@ -43,7 +43,7 @@ const PostList = () => {
   
   return <section style={{width: '1200px', margin: '0 auto'}}>
     <GridContainer>
-      {posts && posts.length > 0 ? posts.map((post, i) => <Post key={`post${i}`} post={post} i={i} />) : 'Loading...'}
+      {posts && posts.length > 0 ? posts.map((post, i) => <Item key={`post${i}`} post={post} i={i} />) : 'Loading...'}
     </GridContainer> 
     {posts && <Pagination pages={pagination.pages} prev={pagination.prev} next={pagination.next} />}
   </section>
