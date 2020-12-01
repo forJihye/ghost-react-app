@@ -41,11 +41,11 @@ const PostList = () => {
     });
   }
   
-  return <section style={{width: '1200px', margin: '0 auto'}}>
+  return <section style={{width: '1200px', margin: '50px auto'}}>
     <GridContainer>
       {posts && posts.length > 0 ? posts.map((post, i) => <Item key={`post${i}`} post={post} i={i} />) : 'Loading...'}
     </GridContainer> 
-    {posts && <Pagination pages={pagination.pages} prev={pagination.prev} next={pagination.next} />}
+    {posts && <Pagination pages={pagination.pages} prev={pagination.prev} next={pagination.next} params={location.search} />}
   </section>
 }
 
